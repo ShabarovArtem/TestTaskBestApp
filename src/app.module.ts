@@ -10,7 +10,7 @@ import { EvaluationModule } from './evaluation/evaluation.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: '.env',
+      envFilePath: `.${process.env.NODE_ENV}.env`,
     }),
     SequelizeModule.forRoot({
       dialect: 'postgres',
@@ -21,6 +21,7 @@ import { EvaluationModule } from './evaluation/evaluation.module';
       database: process.env.POSTGRES_DB,
       models: [Participant, CookingTask],
       autoLoadModels: true,
+      logging: false,
     }),
     ParticipantsModule,
     TaskModule,
