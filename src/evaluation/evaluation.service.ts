@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { CookingEvaluation } from './evaluation.model';
-import { CreateEvaluationDto } from '../dto/create-evaluation.dto';
+import { CreateEvaluationDto } from './dto/create-evaluation.dto';
 import { CookingTask } from '../task/task.model';
 
 @Injectable()

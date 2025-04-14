@@ -5,8 +5,8 @@ import {
 } from '@nestjs/common';
 import { Participant } from './participants.model';
 import { InjectModel } from '@nestjs/sequelize';
-import { CreateParticipantDto } from '../dto/create-participant.dto';
-import { UpdateParticipantDto } from '../dto/update-participant.dto';
+import { CreateParticipantDto } from './dto/create-participant.dto';
+import { UpdateParticipantDto } from './dto/update-participant.dto';
 
 @Injectable()
 export class ParticipantsService {

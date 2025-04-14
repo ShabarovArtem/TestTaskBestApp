@@ -6,9 +6,10 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { CookingTask } from './task.model';
-import { TaskDto } from '../dto/create-task.dto';
+import { CreateTaskDto } from './dto/create-task.dto';
 import axios from 'axios';
 import { CookingGateway } from '../socket/gateway';
+import { UpdateTaskDto } from './dto/update-task.dto';
 
 @Injectable()
 export class TaskService {
@@ -17,7 +18,7 @@ export class TaskService {
     private readonly gateway: CookingGateway,
   ) {}
 
-  async createTask(dto: TaskDto) {
+  async createTask(dto: CreateTaskDto) {
     const { participantId, idMeal } = dto;
 
     const existingTask = await this.taskRepository.findOne({
@@ -60,7 +61,7 @@ export class TaskService {
     }
   }
 
-  async endTask(dto: TaskDto) {
+  async endTask(dto: UpdateTaskDto) {
     const { participantId, idMeal } = dto;
 
     const participant = await this.taskRepository.findOne({

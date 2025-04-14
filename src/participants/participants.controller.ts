@@ -7,9 +7,9 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { CreateParticipantDto } from '../dto/create-participant.dto';
+import { CreateParticipantDto } from './dto/create-participant.dto';
 import { ParticipantsService } from './participants.service';
-import { UpdateParticipantDto } from '../dto/update-participant.dto';
+import { UpdateParticipantDto } from './dto/update-participant.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Participant } from './participants.model';
 

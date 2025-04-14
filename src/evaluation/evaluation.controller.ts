@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { EvaluationService } from './evaluation.service';
-import { CreateEvaluationDto } from '../dto/create-evaluation.dto';
+import { CreateEvaluationDto } from './dto/create-evaluation.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CookingEvaluation } from './evaluation.model';
 
