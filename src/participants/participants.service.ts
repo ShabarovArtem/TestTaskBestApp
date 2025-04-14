@@ -32,6 +32,7 @@ export class ParticipantsService {
     if (!participant) {
       throw ApiException.NotFound('Participant not found');
     }
+
     return participant;
   }
 
@@ -53,6 +54,6 @@ export class ParticipantsService {
       throw ApiException.NotFound('Participant not found');
     }
     await participant.destroy();
-    return { message: `Participant ${participantId} deleted` };
+    return { message: 'Participant deleted' };
   }
 }
