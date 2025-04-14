@@ -1,9 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { CookingEvaluation } from './evaluation.model';
 import { CreateEvaluationDto } from '../dto/create-evaluation.dto';
 import { CookingTask } from '../task/task.model';
-import { ApiException } from '../errors/apiException';
 
 @Injectable()
 export class EvaluationService {
@@ -18,7 +22,7 @@ export class EvaluationService {
     const { participantId, idMeal, score, comments } = dto;
 
     if (score < 0 || score > 10) {
-      throw ApiException.BadRequest('Score must be between 0 and 10');
+      throw new BadRequestException('Score must be between 0 and 10');
     }
 
     const task = await this.taskRepository.findOne({
@@ -26,7 +30,7 @@ export class EvaluationService {
     });
 
     if (!task) {
-      throw ApiException.NotFound(
+      throw new NotFoundException(
         'No task found for this participant with this meal',
       );
     }
@@ -36,7 +40,7 @@ export class EvaluationService {
     });
 
     if (existingEvaluation) {
-      throw ApiException.Conflict('Evaluation already exists');
+      throw new ConflictException('Evaluation already exists');
     }
 
     const evaluation = await this.evaluationRepository.create({
@@ -56,7 +60,7 @@ export class EvaluationService {
     });
 
     if (!evaluations.length) {
-      throw ApiException.NotFound('No evaluations found for this meal');
+      throw new NotFoundException('No evaluations found for this meal');
     }
 
     return evaluations;
@@ -69,7 +73,7 @@ export class EvaluationService {
     });
 
     if (!evaluations.length) {
-      throw ApiException.NotFound('No evaluations found for this participant');
+      throw new NotFoundException('No evaluations found for this participant');
     }
 
     return evaluations;
@@ -81,7 +85,7 @@ export class EvaluationService {
     });
 
     if (!tasks.length) {
-      throw ApiException.NotFound('No tasks found');
+      throw new NotFoundException('No tasks found');
     }
 
     return tasks;

@@ -1,10 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { CookingTask } from './task.model';
 import { TaskDto } from '../dto/create-task.dto';
 import axios from 'axios';
 import { CookingGateway } from '../socket/gateway';
-import { ApiException } from '../errors/apiException';
 
 @Injectable()
 export class TaskService {
@@ -21,7 +25,7 @@ export class TaskService {
     });
 
     if (existingTask) {
-      throw ApiException.Conflict(
+      throw new ConflictException(
         'This task already exists for the participant',
       );
     }
@@ -29,7 +33,7 @@ export class TaskService {
     const meal = await this.getMeal(idMeal);
 
     if (!meal) {
-      throw ApiException.NotFound('Meal not found');
+      throw new NotFoundException('Meal not found');
     }
 
     this.gateway.sendCookingChallenge(meal, participantId);
@@ -50,7 +54,7 @@ export class TaskService {
 
       return response.data.meals;
     } catch (error) {
-      throw ApiException.BadRequest(
+      throw new BadRequestException(
         'Failed to fetch meal data from external API',
       );
     }
@@ -63,7 +67,7 @@ export class TaskService {
       where: { participantId },
     });
     if (!participant) {
-      throw ApiException.NotFound('Participant does not exist');
+      throw new NotFoundException('Participant does not exist');
     }
 
     const task = await this.taskRepository.findOne({
@@ -71,7 +75,7 @@ export class TaskService {
     });
 
     if (!task) {
-      throw ApiException.NotFound('No task found for this participant');
+      throw new NotFoundException('No task found for this participant');
     }
 
     const endTime = new Date();

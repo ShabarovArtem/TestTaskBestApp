@@ -1,9 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Participant } from './participants.model';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateParticipantDto } from '../dto/create-participant.dto';
 import { UpdateParticipantDto } from '../dto/update-participant.dto';
-import { ApiException } from '../errors/apiException';
 
 @Injectable()
 export class ParticipantsService {
@@ -20,7 +23,7 @@ export class ParticipantsService {
     const participants = await this.participantRepository.findAll();
 
     if (participants.length === 0) {
-      throw ApiException.NotFound('No participants found');
+      throw new NotFoundException('No participants found');
     }
     return participants;
   }
@@ -30,7 +33,7 @@ export class ParticipantsService {
       await this.participantRepository.findByPk(participantId);
 
     if (!participant) {
-      throw ApiException.NotFound('Participant not found');
+      throw new NotFoundException('Participant not found');
     }
 
     return participant;
@@ -39,20 +42,23 @@ export class ParticipantsService {
   async updateParticipant(participantId: string, dto: UpdateParticipantDto) {
     const participant = await this.getOneParticipant(participantId);
     const updated = await participant.update({ fullName: dto.fullName });
+
     if (!participant) {
-      throw ApiException.NotFound('Participant not found');
+      throw new NotFoundException('Participant not found');
     }
     if (!updated) {
-      throw ApiException.BadRequest('Failed to update participant');
+      throw new BadRequestException('Failed to update participant');
     }
     return updated;
   }
 
   async deleteParticipant(participantId: string) {
     const participant = await this.getOneParticipant(participantId);
+
     if (!participant) {
-      throw ApiException.NotFound('Participant not found');
+      throw new NotFoundException('Participant not found');
     }
+
     await participant.destroy();
     return { message: 'Participant deleted' };
   }
