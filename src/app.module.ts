@@ -17,7 +17,7 @@ import { EvaluationModule } from './evaluation/evaluation.module';
       host: process.env.POSTGRES_HOST,
       port: Number(process.env.POSTGRESS_PORT),
       username: process.env.POSTGRES_USER,
-      password: process.env.POSTGRESS_PASSWORD,
+      password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
       models: [Participant, CookingTask],
       autoLoadModels: true,
