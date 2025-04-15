@@ -6,14 +6,21 @@ module.exports = {
     await queryInterface.createTable('Participants', {
       participantId: {
         type: Sequelize.STRING,
-        allowNull: false,
         primaryKey: true,
-        unique: true,
-        defaultValue: () => nanoid(7),
       },
       fullName: {
         type: Sequelize.STRING,
         allowNull: false,
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.fn('now'),
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.fn('now'),
       },
     });
   },
