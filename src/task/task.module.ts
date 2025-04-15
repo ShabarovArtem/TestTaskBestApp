@@ -4,9 +4,10 @@ import { TaskController } from './task.controller';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { CookingTask } from './task.model';
 import { CookingGateway } from '../kitchen/kitchenGateway';
+import { MealService } from './meal.searvice';
 
 @Module({
-  providers: [TaskService, CookingGateway],
+  providers: [TaskService, CookingGateway, MealService],
   controllers: [TaskController],
   imports: [SequelizeModule.forFeature([CookingTask])],
 })

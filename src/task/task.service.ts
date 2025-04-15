@@ -7,15 +7,16 @@ import {
 import { InjectModel } from '@nestjs/sequelize';
 import { CookingTask } from './task.model';
 import { CreateTaskDto } from './dto/create-task.dto';
-import axios from 'axios';
 import { CookingGateway } from '../kitchen/kitchenGateway';
 import { UpdateTaskDto } from './dto/update-task.dto';
+import { MealService } from './meal.searvice';
 
 @Injectable()
 export class TaskService {
   constructor(
     @InjectModel(CookingTask) private taskRepository: typeof CookingTask,
     private readonly gateway: CookingGateway,
+    private readonly mealService: MealService,
   ) {}
 
   async createTask(dto: CreateTaskDto) {
@@ -31,7 +32,7 @@ export class TaskService {
       );
     }
 
-    const meal = await this.getMeal(idMeal);
+    const meal = await this.mealService.getMeal(idMeal); // Используем MealService для получения блюда
 
     if (!meal) {
       throw new NotFoundException('Meal not found');
@@ -45,20 +46,6 @@ export class TaskService {
     });
 
     return task;
-  }
-
-  async getMeal(idMeal: string) {
-    try {
-      const response = await axios.get(
-        `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`,
-      );
-
-      return response.data.meals;
-    } catch (error) {
-      throw new BadRequestException(
-        'Failed to fetch meal data from external API',
-      );
-    }
   }
 
   async endTask(dto: UpdateTaskDto) {
