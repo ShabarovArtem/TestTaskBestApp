@@ -3,6 +3,7 @@ import { EvaluationService } from './evaluation.service';
 import { CreateEvaluationDto } from './dto/create-evaluation.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CookingEvaluation } from './evaluation.model';
+import { SearchEvaluationDto } from './dto/search-evaluation.dto';
 
 @ApiTags('evaluation')
 @Controller('evaluation')
@@ -17,13 +18,9 @@ export class EvaluationController {
   }
   @ApiOperation({ summary: 'Get evaluations with optional filters' })
   @ApiResponse({ status: 200, type: [CookingEvaluation] })
-  @Get()
-  async getAll(
-    @Query('idMeal') idMeal: string,
-    @Query('participantId') participantId: string,
-  ) {
-    const filters = { idMeal, participantId };
-    return this.evaluationService.getAllEvaluations(filters);
+  @Post('search')
+  async getAll(@Body() body: SearchEvaluationDto) {
+    return this.evaluationService.getAllEvaluations(body);
   }
   @ApiOperation({ summary: 'Get tasks sorted by time' })
   @ApiResponse({ status: 200, type: [CookingEvaluation] })
