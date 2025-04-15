@@ -53,27 +53,29 @@ export class EvaluationService {
     return evaluation;
   }
 
-  async getEvaluationsByMeal(idMeal: string) {
-    const evaluations = await this.evaluationRepository.findAll({
-      where: { idMeal },
-      order: [['score', 'DESC']],
-    });
+  async getAllEvaluations(filters: {
+    idMeal?: string;
+    participantId?: string;
+  }) {
+    const { idMeal, participantId } = filters;
 
-    if (!evaluations.length) {
-      throw new NotFoundException('No evaluations found for this meal');
+    const where: any = {};
+
+    if (idMeal) {
+      where.idMeal = idMeal;
     }
 
-    return evaluations;
-  }
+    if (participantId) {
+      where.participantId = participantId;
+    }
 
-  async getEvaluationsByParticipant(participantId: string) {
     const evaluations = await this.evaluationRepository.findAll({
-      where: { participantId },
+      where,
       order: [['score', 'DESC']],
     });
 
     if (!evaluations.length) {
-      throw new NotFoundException('No evaluations found for this participant');
+      throw new NotFoundException('No evaluations found for the given filters');
     }
 
     return evaluations;
