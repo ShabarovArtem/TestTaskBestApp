@@ -15,17 +15,15 @@ export class EvaluationController {
   async create(@Body() dto: CreateEvaluationDto) {
     return this.evaluationService.createEvaluation(dto);
   }
-  @ApiOperation({ summary: 'Get evaluations by meal' })
+  @ApiOperation({ summary: 'Get evaluations with optional filters' })
   @ApiResponse({ status: 200, type: [CookingEvaluation] })
-  @Get('meal')
-  getByMeal(@Query('idMeal') idMeal: string) {
-    return this.evaluationService.getEvaluationsByMeal(idMeal);
-  }
-  @ApiOperation({ summary: 'Get evaluations by participant' })
-  @ApiResponse({ status: 200, type: [CookingEvaluation] })
-  @Get('participant')
-  getByParticipant(@Query('participantId') participantId: string) {
-    return this.evaluationService.getEvaluationsByParticipant(participantId);
+  @Get()
+  async getAll(
+    @Query('idMeal') idMeal: string,
+    @Query('participantId') participantId: string,
+  ) {
+    const filters = { idMeal, participantId };
+    return this.evaluationService.getAllEvaluations(filters);
   }
   @ApiOperation({ summary: 'Get tasks sorted by time' })
   @ApiResponse({ status: 200, type: [CookingEvaluation] })
