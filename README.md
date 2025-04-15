@@ -22,6 +22,9 @@ npm run start:dev
 ````
 docker-compose up -d
 ````
+### Swagger
+http://localhost:9000/api/docs
+
 ### Подключение к WebSocket
 
 Сначала необходимо указать данные "fullName" в таблицу participants
