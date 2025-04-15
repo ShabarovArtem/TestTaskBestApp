@@ -8,7 +8,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { CookingTask } from './task.model';
 import { CreateTaskDto } from './dto/create-task.dto';
 import axios from 'axios';
-import { CookingGateway } from '../socket/gateway';
+import { CookingGateway } from '../kitchen/kitchenGateway';
 import { UpdateTaskDto } from './dto/update-task.dto';
 
 @Injectable()
