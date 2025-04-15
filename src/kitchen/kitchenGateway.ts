@@ -14,6 +14,12 @@ export class CookingGateway implements OnGatewayConnection {
 
   handleConnection(client: Socket) {
     const participantId = client.handshake.query.participantId as string;
+
+    if (!participantId) {
+      client.disconnect(true);
+      return;
+    }
+
     if (participantId) {
       client.join(participantId);
     }
