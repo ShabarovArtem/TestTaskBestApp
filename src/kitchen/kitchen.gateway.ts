@@ -20,9 +20,7 @@ export class CookingGateway implements OnGatewayConnection {
       return;
     }
 
-    if (participantId) {
-      client.join(participantId);
-    }
+    client.join(participantId);
   }
 
   sendCookingChallenge(mealDetails, participantId: string) {

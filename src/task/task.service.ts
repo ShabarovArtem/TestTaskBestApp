@@ -6,7 +6,7 @@ import {
 import { InjectModel } from '@nestjs/sequelize';
 import { CookingTask } from './task.model';
 import { CreateTaskDto } from './dto/create-task.dto';
-import { CookingGateway } from '../kitchen/kitchenGateway';
+import { CookingGateway } from '../kitchen/kitchen.gateway';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { MealService } from './meal.service';
 
