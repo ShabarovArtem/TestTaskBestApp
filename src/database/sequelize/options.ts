@@ -1,5 +1,7 @@
+import * as path from 'path';
+
 module.exports = {
-  'migrations-path': './src/database/migrations',
-  'seeders-path': './src/database/seeders',
-  'models-path': './src/database/models',
+  'migrations-path': path.join(__dirname, 'migrations'),
+  'seeders-path': path.join(__dirname, 'seeders'),
+  'models-path': path.join(__dirname, 'models'),
 };
