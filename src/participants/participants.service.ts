@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Participant } from './participants.model';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateParticipantDto } from './dto/create-participant.dto';
@@ -43,21 +39,11 @@ export class ParticipantsService {
     const participant = await this.getOneParticipant(participantId);
     const updated = await participant.update({ fullName: dto.fullName });
 
-    if (!participant) {
-      throw new NotFoundException('Participant not found');
-    }
-    if (!updated) {
-      throw new BadRequestException('Failed to update participant');
-    }
     return updated;
   }
 
   async deleteParticipant(participantId: string) {
     const participant = await this.getOneParticipant(participantId);
-
-    if (!participant) {
-      throw new NotFoundException('Participant not found');
-    }
 
     await participant.destroy();
     return { message: 'Participant deleted' };
