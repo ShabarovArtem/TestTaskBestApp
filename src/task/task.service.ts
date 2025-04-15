@@ -63,10 +63,10 @@ export class TaskService {
 
     const endTime = new Date();
     const createdAt = task.createdAt;
-    const Ms = endTime.getTime() - createdAt.getTime();
-    const Minutes = Math.floor(Ms / 60000);
+    const ms = endTime.getTime() - createdAt.getTime();
+    const minutes = Math.floor(ms / 60000);
 
-    task.setDataValue('timeMinutes', Minutes);
+    task.setDataValue('timeMinutes', minutes);
     await task.save();
 
     return task;
