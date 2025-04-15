@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
@@ -9,7 +8,7 @@ import { CookingTask } from './task.model';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { CookingGateway } from '../kitchen/kitchenGateway';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import { MealService } from './meal.searvice';
+import { MealService } from './meal.service';
 
 @Injectable()
 export class TaskService {
@@ -32,11 +31,7 @@ export class TaskService {
       );
     }
 
-    const meal = await this.mealService.getMeal(idMeal); // Используем MealService для получения блюда
-
-    if (!meal) {
-      throw new NotFoundException('Meal not found');
-    }
+    const meal = await this.mealService.getMeal(idMeal);
 
     this.gateway.sendCookingChallenge(meal, participantId);
 

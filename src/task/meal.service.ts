@@ -1,5 +1,15 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  NotFoundException,
+} from '@nestjs/common';
 import axios from 'axios';
+
+interface MealBasic {
+  idMeal: string;
+  strMeal: string;
+  strCategory: string;
+}
 
 @Injectable()
 export class MealService {
@@ -14,7 +24,21 @@ export class MealService {
         },
       );
 
-      return response.data.meals;
+      const meal = response.data.meals?.[0];
+
+      if (!meal) {
+        throw new NotFoundException('Meal with id not found');
+      }
+
+      if (!meal.idMeal || !meal.strMeal || !meal.strCategory) {
+        throw new NotFoundException('Meal data is incomplete');
+      }
+
+      return {
+        idMeal: meal.idMeal,
+        strMeal: meal.strMeal,
+        strCategory: meal.strCategory,
+      } as MealBasic;
     } catch (error) {
       throw new BadRequestException(
         'Failed to fetch meal data from external API',
