@@ -61,6 +61,10 @@ export class TaskService {
       throw new NotFoundException('No task found for this participant');
     }
 
+    if (task.timeMinutes !== null && task.timeMinutes !== undefined) {
+      throw new ConflictException('This task already completed');
+    }
+
     const endTime = new Date();
     const createdAt = task.createdAt;
     const ms = endTime.getTime() - createdAt.getTime();
