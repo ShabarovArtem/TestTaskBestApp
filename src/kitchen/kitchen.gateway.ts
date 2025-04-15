@@ -5,6 +5,7 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { Injectable } from '@nestjs/common';
+import { MealBasic } from '../task/meal.service';
 
 @WebSocketGateway({ namespace: '/kitchen' })
 @Injectable()
@@ -23,7 +24,7 @@ export class CookingGateway implements OnGatewayConnection {
     client.join(participantId);
   }
 
-  sendCookingChallenge(mealDetails, participantId: string) {
+  sendCookingChallenge(mealDetails: MealBasic, participantId: string) {
     this.server.to(participantId).emit('CookingChallenge', mealDetails);
   }
 }

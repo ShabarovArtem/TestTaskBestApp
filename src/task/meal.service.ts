@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import axios from 'axios';
 
-interface MealBasic {
+export interface MealBasic {
   idMeal: string;
   strMeal: string;
   strCategory: string;
