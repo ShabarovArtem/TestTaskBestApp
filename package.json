@@ -17,7 +17,14 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "db:migrate": "npm run sequelize:ts -- db:migrate",
+    "db:migrate:undo": "npm run sequelize:ts -- db:migrate:undo",
+    "db:migration:create": "npm run sequelize:ts -- migration:create --name",
+    "db:seed:generate": "npm run sequelize:ts -- seed:generate",
+    "db:seed:run": "npm run sequelize:ts -- db:seed:all",
+    "db:seed:undo": "npm run sequelize:ts -- db:seed:undo",
+    "sequelize:ts": "ts-node -r tsconfig-paths/register ./node_modules/sequelize-cli/lib/sequelize --config src/database/sequelize/config.ts --options-path src/database/sequelize/options.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -36,6 +43,8 @@
     "pg-hstore": "^2.3.4",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
+    "sequelize": "^6.37.7",
+    "sequelize-cli": "6.3.0",
     "sequelize-typescript": "^2.1.6",
     "socket.io": "^4.8.1",
     "swagger-ui-express": "^5.0.1"
