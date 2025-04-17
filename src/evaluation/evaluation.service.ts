@@ -62,15 +62,9 @@ export class EvaluationService {
       where.participantId = participantId;
     }
 
-    const evaluations = await this.evaluationRepository.findAll({
+    return await this.evaluationRepository.findAll({
       where,
       order: [['score', 'DESC']],
     });
-
-    if (!evaluations.length) {
-      throw new NotFoundException('No evaluations found for the given filters');
-    }
-
-    return evaluations;
   }
 }

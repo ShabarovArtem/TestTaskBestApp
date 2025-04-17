@@ -15,12 +15,7 @@ export class ParticipantsService {
   }
 
   async getAllParticipants() {
-    const participants = await this.participantRepository.findAll();
-
-    if (participants.length === 0) {
-      throw new NotFoundException('No participants found');
-    }
-    return participants;
+    return await this.participantRepository.findAll();
   }
 
   async getOneParticipant(participantId: string) {

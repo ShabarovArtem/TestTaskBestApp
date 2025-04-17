@@ -81,10 +81,6 @@ export class TaskService {
       order: [['timeMinutes', 'DESC']],
     });
 
-    if (!tasks.length) {
-      throw new NotFoundException('No tasks found');
-    }
-
     return tasks;
   }
 }
