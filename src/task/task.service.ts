@@ -21,9 +21,7 @@ export class TaskService {
   async createTask(dto: CreateTaskDto) {
     const { participantId, idMeal } = dto;
 
-    const existingTask = await this.taskRepository.findOne({
-      where: { participantId, idMeal },
-    });
+    const existingTask = await this.findTask(participantId, idMeal);
 
     if (existingTask) {
       throw new ConflictException(
@@ -53,9 +51,7 @@ export class TaskService {
       throw new NotFoundException('Participant does not exist');
     }
 
-    const task = await this.taskRepository.findOne({
-      where: { participantId, idMeal },
-    });
+    const task = await this.findTask(participantId, idMeal);
 
     if (!task) {
       throw new NotFoundException('No task found for this participant');
@@ -74,5 +70,23 @@ export class TaskService {
     await task.save();
 
     return task;
+  }
+
+  async findTask(participantId: string, idMeal: string) {
+    return this.taskRepository.findOne({
+      where: { participantId, idMeal },
+    });
+  }
+
+  async getTasksByTime() {
+    const tasks = await this.taskRepository.findAll({
+      order: [['timeMinutes', 'DESC']],
+    });
+
+    if (!tasks.length) {
+      throw new NotFoundException('No tasks found');
+    }
+
+    return tasks;
   }
 }

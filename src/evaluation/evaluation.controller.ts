@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { EvaluationService } from './evaluation.service';
 import { CreateEvaluationDto } from './dto/create-evaluation.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -21,11 +21,5 @@ export class EvaluationController {
   @Post('search')
   async getAll(@Body() body: SearchEvaluationDto) {
     return this.evaluationService.getAllEvaluations(body);
-  }
-  @ApiOperation({ summary: 'Get tasks sorted by time' })
-  @ApiResponse({ status: 200, type: [CookingEvaluation] })
-  @Get('time')
-  getByTime() {
-    return this.evaluationService.getTasksByTime();
   }
 }

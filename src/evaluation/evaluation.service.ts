@@ -7,15 +7,14 @@ import {
 import { InjectModel } from '@nestjs/sequelize';
 import { CookingEvaluation } from './evaluation.model';
 import { CreateEvaluationDto } from './dto/create-evaluation.dto';
-import { CookingTask } from '../task/task.model';
+import { TaskService } from '../task/task.service';
 
 @Injectable()
 export class EvaluationService {
   constructor(
     @InjectModel(CookingEvaluation)
     private evaluationRepository: typeof CookingEvaluation,
-    @InjectModel(CookingTask)
-    private taskRepository: typeof CookingTask,
+    private taskService: TaskService,
   ) {}
 
   async createEvaluation(dto: CreateEvaluationDto) {
@@ -25,9 +24,7 @@ export class EvaluationService {
       throw new BadRequestException('Score must be between 0 and 10');
     }
 
-    const task = await this.taskRepository.findOne({
-      where: { participantId, idMeal },
-    });
+    const task = await this.taskService.findTask(participantId, idMeal);
 
     if (!task) {
       throw new NotFoundException(
@@ -79,17 +76,5 @@ export class EvaluationService {
     }
 
     return evaluations;
-  }
-
-  async getTasksByTime() {
-    const tasks = await this.taskRepository.findAll({
-      order: [['timeMinutes', 'DESC']],
-    });
-
-    if (!tasks.length) {
-      throw new NotFoundException('No tasks found');
-    }
-
-    return tasks;
   }
 }

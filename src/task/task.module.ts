@@ -10,5 +10,6 @@ import { KitchenGateway } from '../kitchen/kitchen.gateway';
   providers: [TaskService, KitchenGateway, MealService],
   controllers: [TaskController],
   imports: [SequelizeModule.forFeature([CookingTask])],
+  exports: [TaskService],
 })
 export class TaskModule {}

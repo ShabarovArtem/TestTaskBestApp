@@ -3,11 +3,11 @@ import { EvaluationService } from './evaluation.service';
 import { EvaluationController } from './evaluation.controller';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { CookingEvaluation } from './evaluation.model';
-import { CookingTask } from '../task/task.model';
+import { TaskModule } from '../task/task.module';
 
 @Module({
   providers: [EvaluationService],
   controllers: [EvaluationController],
-  imports: [SequelizeModule.forFeature([CookingEvaluation, CookingTask])],
+  imports: [SequelizeModule.forFeature([CookingEvaluation]), TaskModule],
 })
 export class EvaluationModule {}
