@@ -8,6 +8,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { CookingEvaluation } from './evaluation.model';
 import { CreateEvaluationDto } from './dto/create-evaluation.dto';
 import { TaskService } from '../task/task.service';
+import { SearchEvaluationDto } from './dto/search-evaluation.dto';
 
 @Injectable()
 export class EvaluationService {
@@ -40,23 +41,18 @@ export class EvaluationService {
       throw new ConflictException('Evaluation already exists');
     }
 
-    const evaluation = await this.evaluationRepository.create({
+    return await this.evaluationRepository.create({
       participantId,
       idMeal,
       score,
       comments,
     });
-
-    return evaluation;
   }
 
-  async getAllEvaluations(filters: {
-    idMeal?: string;
-    participantId?: string;
-  }) {
+  async getAllEvaluations(filters: SearchEvaluationDto) {
     const { idMeal, participantId } = filters;
 
-    const where: any = {};
+    const where: Partial<SearchEvaluationDto> = {};
 
     if (idMeal) {
       where.idMeal = idMeal;

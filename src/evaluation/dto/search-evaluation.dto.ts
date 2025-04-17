@@ -9,10 +9,10 @@ export class SearchEvaluationDto {
   })
   @IsOptional()
   @IsString()
-  readonly participantId?: string;
+  participantId?: string;
 
   @ApiProperty({ example: '53068', description: 'Meal id', required: false })
   @IsOptional()
   @IsString()
-  readonly idMeal?: string;
+  idMeal?: string;
 }
