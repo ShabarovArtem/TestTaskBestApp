@@ -2,8 +2,10 @@ import {
   Injectable,
   BadRequestException,
   NotFoundException,
+  Inject,
 } from '@nestjs/common';
-import axios, { AxiosResponse } from 'axios';
+import { MEAL_API } from '../http/http.provider';
+import { AxiosInstance } from 'axios';
 
 export interface MealBasic {
   idMeal: string;
@@ -17,16 +19,12 @@ interface ApiResponse {
 
 @Injectable()
 export class MealService {
+  constructor(@Inject(MEAL_API) private readonly axios: AxiosInstance) {}
   async getMeal(idMeal: string) {
     try {
-      const response: AxiosResponse<ApiResponse> = await axios.get(
-        'https://www.themealdb.com/api/json/v1/1/lookup.php',
-        {
-          params: {
-            i: idMeal,
-          },
-        },
-      );
+      const response = await this.axios.get<ApiResponse>('lookup.php', {
+        params: { i: idMeal },
+      });
 
       const meal = response.data.meals?.[0];
 
@@ -34,15 +32,7 @@ export class MealService {
         throw new NotFoundException('Meal with id not found');
       }
 
-      if (!meal.idMeal || !meal.strMeal || !meal.strCategory) {
-        throw new NotFoundException('Meal data is incomplete');
-      }
-
-      return {
-        idMeal: meal.idMeal,
-        strMeal: meal.strMeal,
-        strCategory: meal.strCategory,
-      } as MealBasic;
+      return meal;
     } catch (error) {
       throw new BadRequestException(
         'Failed to fetch meal data from external API',
