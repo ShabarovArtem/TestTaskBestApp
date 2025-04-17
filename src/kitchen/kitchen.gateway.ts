@@ -9,7 +9,7 @@ import { MealBasic } from '../task/meal.service';
 
 @WebSocketGateway({ namespace: '/kitchen' })
 @Injectable()
-export class CookingGateway implements OnGatewayConnection {
+export class KitchenGateway implements OnGatewayConnection {
   @WebSocketServer()
   server: Server;
 

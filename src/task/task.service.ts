@@ -6,7 +6,7 @@ import {
 import { InjectModel } from '@nestjs/sequelize';
 import { CookingTask } from './task.model';
 import { CreateTaskDto } from './dto/create-task.dto';
-import { CookingGateway } from '../kitchen/kitchen.gateway';
+import { KitchenGateway } from '../kitchen/kitchen.gateway';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { MealService } from './meal.service';
 
@@ -14,7 +14,7 @@ import { MealService } from './meal.service';
 export class TaskService {
   constructor(
     @InjectModel(CookingTask) private taskRepository: typeof CookingTask,
-    private readonly gateway: CookingGateway,
+    private readonly gateway: KitchenGateway,
     private readonly mealService: MealService,
   ) {}
 
