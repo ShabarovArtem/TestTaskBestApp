@@ -29,6 +29,6 @@ export class CookingTask extends Model<CookingTask, CookingTaskCreation> {
   participant: Participant;
 
   @ApiProperty({ example: 30, description: 'Time the task in minutes' })
-  @Column({ type: DataType.INTEGER, defaultValue: 0 })
+  @Column({ type: DataType.INTEGER, defaultValue: null })
   timeMinutes: number;
 }

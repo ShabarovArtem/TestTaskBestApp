@@ -25,7 +25,7 @@ module.exports = {
       },
       timeMinutes: {
         type: Sequelize.INTEGER,
-        defaultValue: 0,
+        defaultValue: null,
       },
       createdAt: {
         type: Sequelize.DATE,

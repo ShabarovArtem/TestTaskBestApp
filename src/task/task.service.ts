@@ -55,7 +55,7 @@ export class TaskService {
       throw new NotFoundException('No task found for this participant');
     }
 
-    if (!task.timeMinutes) {
+    if (task.timeMinutes !== null && task.timeMinutes > 0) {
       throw new ConflictException('This task already completed');
     }
 
