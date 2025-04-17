@@ -5,8 +5,8 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { Injectable } from '@nestjs/common';
-import { MealBasic } from '../task/meal.service';
 import { ParticipantsService } from '../participants/participants.service';
+import { MealBasic } from '../meal/meal.service';
 
 @WebSocketGateway({ namespace: '/kitchen' })
 @Injectable()

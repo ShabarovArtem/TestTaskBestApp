@@ -8,7 +8,7 @@ import { CookingTask } from './task.model';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { KitchenGateway } from '../kitchen/kitchen.gateway';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import { MealService } from './meal.service';
+import { MealService } from '../meal/meal.service';
 
 @Injectable()
 export class TaskService {
