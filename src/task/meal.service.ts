@@ -3,7 +3,7 @@ import {
   BadRequestException,
   NotFoundException,
 } from '@nestjs/common';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 export interface MealBasic {
   idMeal: string;
@@ -11,11 +11,15 @@ export interface MealBasic {
   strCategory: string;
 }
 
+interface ApiResponse {
+  meals: MealBasic[];
+}
+
 @Injectable()
 export class MealService {
   async getMeal(idMeal: string) {
     try {
-      const response = await axios.get(
+      const response: AxiosResponse<ApiResponse> = await axios.get(
         'https://www.themealdb.com/api/json/v1/1/lookup.php',
         {
           params: {
