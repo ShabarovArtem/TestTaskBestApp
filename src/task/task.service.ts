@@ -33,12 +33,10 @@ export class TaskService {
 
     this.gateway.sendCookingChallenge(meal, participantId);
 
-    const task = await this.taskRepository.create({
+    return await this.taskRepository.create({
       participantId,
       idMeal,
     });
-
-    return task;
   }
 
   async endTask(dto: UpdateTaskDto) {
@@ -62,7 +60,7 @@ export class TaskService {
     }
 
     const endTime = new Date();
-    const createdAt = task.createdAt;
+    const createdAt = task.createdAt as Date;
     const ms = endTime.getTime() - createdAt.getTime();
     const minutes = Math.floor(ms / 60000);
 

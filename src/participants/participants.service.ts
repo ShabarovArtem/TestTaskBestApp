@@ -11,8 +11,7 @@ export class ParticipantsService {
   ) {}
 
   async createParticipant(dto: CreateParticipantDto) {
-    const participant = await this.participantRepository.create(dto);
-    return participant;
+    return await this.participantRepository.create(dto);
   }
 
   async getAllParticipants() {
@@ -37,9 +36,7 @@ export class ParticipantsService {
 
   async updateParticipant(participantId: string, dto: UpdateParticipantDto) {
     const participant = await this.getOneParticipant(participantId);
-    const updated = await participant.update({ fullName: dto.fullName });
-
-    return updated;
+    return await participant.update({ fullName: dto.fullName });
   }
 
   async deleteParticipant(participantId: string) {
