@@ -22,9 +22,12 @@ export class MealService {
   constructor(@Inject(MEAL_API) private readonly axios: AxiosInstance) {}
   async getMeal(idMeal: string) {
     try {
-      const response = await this.axios.get<ApiResponse>('lookup.php', {
-        params: { i: idMeal },
-      });
+      const response = await this.axios.get<ApiResponse>(
+        'api/json/v1/1/lookup.php',
+        {
+          params: { i: idMeal },
+        },
+      );
 
       const meal = response.data.meals?.[0];
 
