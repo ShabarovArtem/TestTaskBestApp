@@ -3,8 +3,14 @@ services:
     build: .
     restart: always
     hostname: api
-    env_file:
-      - .development.docker.env
+    environment:
+      PORT: 9000
+      POSTGRES_PORT: 5432
+      POSTGRES_HOST: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: best-app
+      MEAL_API_URL: https://www.themealdb.com/api/json/v1/1/
     ports:
       - "9000:9000"
     depends_on:

@@ -15,10 +15,7 @@ npm install
 ````
 npm run start:dev
 ````
-### Production
-Настройки бд в .production.env
 #### docker-compose
-Настройки докера в .development.docker.env
 ````
 docker-compose up -d
 ````
