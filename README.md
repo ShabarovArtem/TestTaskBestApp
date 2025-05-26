@@ -1,5 +1,3 @@
-# Test task for BestApp
-
 ## Установка
 
 ````
